@@ -1,0 +1,12 @@
+.UsersTable-container {
+    margin-top: 20px;
+}
+
+.UsersTable-container table {
+    width: 100%;
+}
+
+
+.UsersTable-container table td {
+    height: 40px;
+}
