@@ -12,12 +12,8 @@ function UsersTable(props) {
   for (let i = 0; i < users["0"].length; i += 1) {
       let value = users["0"][i];
       console.log(`test ${value}`);
-      items.push(<tr key={value[0]}><td>{value[0]}</td><td>{value[1]}</td><td>{value[2]}</td></tr>)
+      items.push(<tr key={value}><td>{value}</td><td>{value}</td><td>{value}</td></tr>)
   }
-
-  console.log("-----");
-  console.log(users);
-  console.log(items);
 
   return (
     <div className="UsersTable-container">

@@ -19,6 +19,11 @@
   flex-direction: column;
 }
 
+.help-button {
+  align-self: center;
+  width: auto;
+}
+
 
 
 /* @keyframes App-logo-spin {

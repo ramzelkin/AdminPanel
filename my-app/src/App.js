@@ -4,11 +4,10 @@ import UsersTable from './UsersTable.js';
 import AddUserButton from './AddUserButton.js';
 
 function App() {
-  const [users, setUsers] = useState([[]]);
+  const [users, setUsers] = useState([["111", "222", "333"]]);
 
   const handleChange = () => {
-    console.log("aaaa"); 
-    setUsers([["eeeee", "bbbbb", "cccc"]]);
+    setUsers([["test-test", "test-test-111", "test-test-121"]]);
   };
 
   return (
@@ -17,7 +16,7 @@ function App() {
         <div className="wrapper">
           <AddUserButton />
           <UsersTable {...users}/>
-          <button onClick={handleChange}>Button</button>
+          <button className="help-button" onClick={handleChange}>Button</button>
         </div>
       </div>
     </div>
