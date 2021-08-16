@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './NewUserForm.css';
 
-const NewUserForm = ({ isShowing, hide }) => isShowing ? ReactDOM.createPortal(
+const NewUserForm = ({ isShowing, hide, addNewUser }) => isShowing ? ReactDOM.createPortal(
   <React.Fragment>
     <div className="modal-overlay"/>
     <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
@@ -27,7 +27,9 @@ const NewUserForm = ({ isShowing, hide }) => isShowing ? ReactDOM.createPortal(
           </div>
         </div>
         <button className="save-btn" onClick={ () => {
-          setData();
+          let user = getData();
+
+          addNewUser(user);
           hide();
         }}>Save</button>
       </div>
@@ -35,16 +37,15 @@ const NewUserForm = ({ isShowing, hide }) => isShowing ? ReactDOM.createPortal(
   </React.Fragment>, document.body
 ) : null;
 
-function setData() {
-  let arr = [];
+function getData() {
+  let dataUser = {};
   let userNameElemValue = document.getElementById('userName').value;
-  arr.push(userNameElemValue);
+  dataUser["name"] = userNameElemValue;
   let emailElemValue = document.getElementById('email').value;
-  arr.push(emailElemValue);
+  dataUser["email"] = emailElemValue;
   let cityElemValue = document.getElementById('city').value;
-  arr.push(cityElemValue);
-  console.log(arr);
-  return arr;
+  dataUser["city"] = cityElemValue;
+  return dataUser;
 }
 
 export default NewUserForm;

@@ -3,8 +3,9 @@ import './AddUserButton.css';
 import NewUserForm from './NewUserForm.js'
 import useModal from './useModal';
 
-function AddUserButton() {
+const AddUserButton = (props) => {
   const {isShowing, toggle} = useModal();
+  const {users, setUser} = useState([]);
 
   return (
     <React.Fragment>
@@ -12,6 +13,7 @@ function AddUserButton() {
       <NewUserForm 
         isShowing={isShowing}
         hide={toggle}
+        addNewUser = {props.handleChange}
       />
     </React.Fragment>
   );

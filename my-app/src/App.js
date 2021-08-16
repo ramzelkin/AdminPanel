@@ -4,19 +4,27 @@ import UsersTable from './UsersTable.js';
 import AddUserButton from './AddUserButton.js';
 
 function App() {
-  const [users, setUsers] = useState([["111", "222", "333"]]);
+  const [users, setUsers] = useState([ {"name": "Carl", "email": "example@gmail.com", "city": "Rome" } ]);
 
-  const handleChange = () => {
-    setUsers([["test-test", "test-test-111", "test-test-121"]]);
-  };
+  const handleChange = (user) => {
+    let temp = users;
+
+    temp.push(user);
+    setUsers(temp);
+  }
+
+  useEffect(() => {
+    console.log("qqqq");
+    console.log(users);
+    setUsers(users);
+  }, [users]);
 
   return (
     <div className="App">
       <div className="App-container">
         <div className="wrapper">
-          <AddUserButton />
-          <UsersTable {...users}/>
-          <button className="help-button" onClick={handleChange}>Button</button>
+          <AddUserButton handleChange={handleChange}/>
+          <UsersTable users={users}/>
         </div>
       </div>
     </div>

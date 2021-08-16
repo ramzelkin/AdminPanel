@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import './UsersTable.css';
 
-function UsersTable(props) {
-  const [users, setUsers] = useState(props);
+const UsersTable = props => {
+  const [users, setUsers] = useState(props.users);
+  // const [tempUser, setTempUser] = useState(null);
 
   useEffect(() => {
-    setUsers(props);
-  }, [props]);
+    console.log("asassasa");
+    console.log(users);
+    setUsers(users);
+  }, [props.users]);
 
-  let items = [];
-  for (let i = 0; i < users["0"].length; i += 1) {
-      let value = users["0"][i];
-      console.log(`test ${value}`);
-      items.push(<tr key={value}><td>{value}</td><td>{value}</td><td>{value}</td></tr>)
-  }
+  const rows = users.map((item, i) =>
+    <tr key={i}>
+      <td>{item.name}</td>
+      <td>{item.email}</td>
+      <td>{item.city}</td>
+    </tr>
+  );
 
   return (
     <div className="UsersTable-container">
@@ -26,7 +30,7 @@ function UsersTable(props) {
               </tr>
           </thead>
           <tbody>
-            {items}
+            {rows}
           </tbody>
       </table>
     </div>
