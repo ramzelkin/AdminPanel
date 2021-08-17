@@ -2,20 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './UsersTable.css';
 
 const UsersTable = props => {
-  const [users, setUsers] = useState(props.users);
-  // const [tempUser, setTempUser] = useState(null);
-
-  useEffect(() => {
-    console.log("asassasa");
-    console.log(users);
-    setUsers(users);
-  }, [props.users]);
-
-  const rows = users.map((item, i) =>
+  const rows = props.users.map((item, i) =>
     <tr key={i}>
       <td>{item.name}</td>
       <td>{item.email}</td>
       <td>{item.city}</td>
+      <td><button>Edit</button><button>Delete</button></td>
     </tr>
   );
 

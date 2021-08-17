@@ -9,4 +9,9 @@
 
 .UsersTable-container table td {
     height: 40px;
+    text-align: left;
 }
+
+.UsersTable-container table th {
+    text-align: left;
+} 

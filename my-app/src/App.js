@@ -7,15 +7,13 @@ function App() {
   const [users, setUsers] = useState([ {"name": "Carl", "email": "example@gmail.com", "city": "Rome" } ]);
 
   const handleChange = (user) => {
-    let temp = users;
+    let temp = [...users];
 
     temp.push(user);
     setUsers(temp);
   }
 
   useEffect(() => {
-    console.log("qqqq");
-    console.log(users);
     setUsers(users);
   }, [users]);
 
@@ -23,7 +21,7 @@ function App() {
     <div className="App">
       <div className="App-container">
         <div className="wrapper">
-          <AddUserButton handleChange={handleChange}/>
+          <AddUserButton handleChange={handleChange} />
           <UsersTable users={users}/>
         </div>
       </div>
