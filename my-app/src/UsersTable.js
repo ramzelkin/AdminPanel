@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import './UsersTable.css';
 
-const UsersTable = props => {
+const setDeletedUser = (e) => {
+  let target = e.target;
+  let row = target.closest("tr");
+  let index = row.getAttribute("data-index");
+  return index;
+}
+
+const UsersTable = (props) => {
   const rows = props.users.map((item, i) =>
-    <tr key={i}>
+    <tr key={i} data-index={i}>
       <td>{item.name}</td>
       <td>{item.email}</td>
       <td>{item.city}</td>
-      <td><button>Edit</button><button>Delete</button></td>
+      <td>
+        <button className="editUser">Edit</button>
+        <button className="deleteUser" onClick={ (e) => {
+            let deletedUserRow = setDeletedUser(e);
+            props.deleteRow(deletedUserRow);
+          }}>Delete</button>
+      </td>
     </tr>
   );
 

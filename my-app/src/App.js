@@ -8,8 +8,13 @@ function App() {
 
   const handleChange = (user) => {
     let temp = [...users];
-
     temp.push(user);
+    setUsers(temp);
+  }
+
+  const deleteRow = (index) => {
+    let temp = [...users];
+    temp.splice(index, 1);
     setUsers(temp);
   }
 
@@ -22,7 +27,7 @@ function App() {
       <div className="App-container">
         <div className="wrapper">
           <AddUserButton handleChange={handleChange} />
-          <UsersTable users={users}/>
+          <UsersTable users={users} deleteRow={deleteRow}/>
         </div>
       </div>
     </div>

@@ -5,7 +5,6 @@ import useModal from './useModal';
 
 const AddUserButton = (props) => {
   const {isShowing, toggle} = useModal();
-  const {users, setUser} = useState([]);
 
   return (
     <React.Fragment>

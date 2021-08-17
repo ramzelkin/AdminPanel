@@ -15,20 +15,19 @@ const NewUserForm = ({ isShowing, hide, addNewUser }) => isShowing ? ReactDOM.cr
         <div className="container">
           <div>
             <span>User name</span>
-            <input type="text" id="userName" />
+            <input type="text" className="userName" />
           </div>
           <div>
             <span>Email</span>
-            <input type="text" id="email" />
+            <input type="text" className="email" />
           </div>
           <div>
             <span>City</span>
-            <input type="text" id="city" />
+            <input type="text" className="city" />
           </div>
         </div>
         <button className="save-btn" onClick={ () => {
           let user = getData();
-
           addNewUser(user);
           hide();
         }}>Save</button>
@@ -39,11 +38,11 @@ const NewUserForm = ({ isShowing, hide, addNewUser }) => isShowing ? ReactDOM.cr
 
 function getData() {
   let dataUser = {};
-  let userNameElemValue = document.getElementById('userName').value;
+  let userNameElemValue = document.getElementsByClassName('userName')[0].value;
   dataUser["name"] = userNameElemValue;
-  let emailElemValue = document.getElementById('email').value;
+  let emailElemValue = document.getElementsByClassName('email')[0].value;
   dataUser["email"] = emailElemValue;
-  let cityElemValue = document.getElementById('city').value;
+  let cityElemValue = document.getElementsByClassName('city')[0].value;
   dataUser["city"] = cityElemValue;
   return dataUser;
 }
