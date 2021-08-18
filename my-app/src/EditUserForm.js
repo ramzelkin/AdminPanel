@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './NewUserForm.css';
 
 const getData = () => {
-  let dataUser = {};
-  let userNameElemValue = document.getElementsByClassName('userName')[0].value;
-  dataUser["name"] = userNameElemValue;
-  let emailElemValue = document.getElementsByClassName('email')[0].value;
-  dataUser["email"] = emailElemValue;
-  let cityElemValue = document.getElementsByClassName('city')[0].value;
-  dataUser["city"] = cityElemValue;
-  return dataUser;
-}
+    let dataUser = {};
+    let userNameElemValue = document.getElementsByClassName('userName')[0].value;
+    dataUser["name"] = userNameElemValue;
+    let emailElemValue = document.getElementsByClassName('email')[0].value;
+    dataUser["email"] = emailElemValue;
+    let cityElemValue = document.getElementsByClassName('city')[0].value;
+    dataUser["city"] = cityElemValue;
+    return dataUser;
+  }
 
-const NewUserForm = ({ isShowing, hide, addNewUser }) => isShowing ? ReactDOM.createPortal(
+const EditUserForm = ({ isShowing, hide, addEditedUser }) => isShowing ? ReactDOM.createPortal(
   <React.Fragment>
     <div className="modal-overlay"/>
     <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
@@ -39,7 +38,7 @@ const NewUserForm = ({ isShowing, hide, addNewUser }) => isShowing ? ReactDOM.cr
         </div>
         <button className="save-btn" onClick={ () => {
           let user = getData();
-          addNewUser(user);
+          addEditedUser(user);
           hide();
         }}>Save</button>
       </div>
@@ -47,4 +46,4 @@ const NewUserForm = ({ isShowing, hide, addNewUser }) => isShowing ? ReactDOM.cr
   </React.Fragment>, document.body
 ) : null;
 
-export default NewUserForm;
+export default EditUserForm;

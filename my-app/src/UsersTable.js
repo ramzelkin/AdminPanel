@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './UsersTable.css';
+import './NewUserForm.css';
 
 const setDeletedUser = (e) => {
   let target = e.target;
@@ -15,7 +16,11 @@ const UsersTable = (props) => {
       <td>{item.email}</td>
       <td>{item.city}</td>
       <td>
-        <button className="editUser">Edit</button>
+        <button className="editUser" onClick={ (e) => {
+          let editedUser = setDeletedUser(e);
+          props.editRow(editedUser);
+        }}>Edit</button>
+
         <button className="deleteUser" onClick={ (e) => {
             let deletedUserRow = setDeletedUser(e);
             props.deleteRow(deletedUserRow);

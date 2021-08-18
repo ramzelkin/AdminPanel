@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './AddUserButton.css';
 import NewUserForm from './NewUserForm.js'
 import useModal from './useModal';
