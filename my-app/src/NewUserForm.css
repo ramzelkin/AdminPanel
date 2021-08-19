@@ -98,3 +98,7 @@
   .save-btn:hover {
     cursor: pointer;
   }
+
+  .error-text {
+    color: rgb(248, 128, 112) !important;
+  }
