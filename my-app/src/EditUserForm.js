@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import './EditUserForm.css';
 
 const isValidEmail = (value) => {
-  // const regex = new RegExp('');
-  // let result = regex.test(value);
-  return value !== '';
-  // console.log(result);
-  // return result;
+  value = value.toLowerCase();
+  const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  let result = regex.test(value);
+  console.log(result);
+  return result;
 }
 
 const getData = () => {
@@ -27,7 +28,7 @@ const EditUserForm = ({ isShowing, hide, addEditedUser, user }) => {
 
   const errorMessage = isValid
     ? <div/>
-    : <div><span>Wrong email</span></div>
+    : <div><span className="error-text">Wrong email</span></div>
   return isShowing ? ReactDOM.createPortal(
     <React.Fragment>
       <div className="modal-overlay"/>
