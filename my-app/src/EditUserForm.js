@@ -21,12 +21,19 @@ const EditUserForm = ({ isShowing, hide, addEditedUser, user }) => {
   const [inputCity, setInputCity] = useState('');
   const [isEmptyName, setIsEmptyName] = useState(true);
   const [isEmptyCity, setIsEmptyCity] = useState(true);
+  const [callback, setCallback] = useState((user) => { });
 
   useEffect(() => {
+    if (user.name == undefined) return;
+
     setInputName(user.name);
     setInputEmail(user.email);
     setInputCity(user.city);
   }, [user]);
+
+  useEffect(() => {
+    setCallback(addEditedUser);
+  }, [addEditedUser]);
   
   const handleInputNameChange = (event) => {
     setInputName(event.target.value);
@@ -94,7 +101,7 @@ const emptyCityMessage = isEmptyCity
               user["name"] = inputName;
               user["email"] = inputEmail;
               user["city"] = inputCity;
-              addEditedUser(user);
+              callback(user);
               hide();
               setInputName('');
               setInputEmail('');
