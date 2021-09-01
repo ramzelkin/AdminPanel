@@ -14,7 +14,7 @@ const isEmpty = (value) => {
   return value !== '';
 }
 
-const NewUserForm = ({ isShowing, hide, addNewUser, user }) => {
+const NewUserForm = ({ isShowing, hide, addNewUser }) => {
   const [isValid, setIsValid] = useState(true);
   const [inputName, setInputName] = useState('');
   const [inputEmail, setInputEmail] = useState('');
@@ -59,17 +59,17 @@ const NewUserForm = ({ isShowing, hide, addNewUser, user }) => {
         <div className="container">
           <div>
             <span>User name</span>
-            <input type="text" name="name" onChange={handleInputNameChange} value={inputName} />
+            <input type="text" onChange={handleInputNameChange} value={inputName} />
             {emptyNameMessage}
           </div>
           <div>
             <span>Email</span>
-            <input type="text" name="email" onChange={handleInputEmailChange} value={inputEmail}/>
+            <input type="text" onChange={handleInputEmailChange} value={inputEmail}/>
             {errorMessage}
           </div>
           <div>
             <span>City</span>
-            <input type="text" name="city" onChange={handleInputCityChange} value={inputCity}/>
+            <input type="text" onChange={handleInputCityChange} value={inputCity}/>
             {emptyCityMessage}
           </div>
         </div>
