@@ -19,3 +19,7 @@
 button:hover {
     cursor: pointer;
 }
+
+table button {
+    height: 100%;
+}

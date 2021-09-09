@@ -1,0 +1,9 @@
+.theme-button {
+    align-self: flex-end;
+    margin-top: 40px;
+    margin-right: 40px;
+    height: 46px;
+    border-radius: 4px;
+    font-size: 16px;
+    border: none;
+}

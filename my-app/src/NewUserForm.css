@@ -23,13 +23,11 @@
   
   .modal {
     z-index: 100;
-    background: rgb(32,33,36);
     position: relative;
     margin: 1.75rem auto;
     border-radius: 3px;
     max-width: 500px;
     padding: 2rem;
-
   }
   
   .modal-header {
@@ -76,8 +74,6 @@
   .container div input[type="text"] {
     height: 45px;
     border-radius: 4px;
-    background:rgb(41,42,45);
-    
     color: #fff;
     font-size: 1.2rem;
     border: 1px solid transparent;

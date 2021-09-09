@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import './NewUserForm.css';
+import { ThemeContext } from './theme-context';
 
 const isValidEmail = (value) => {
   value = value.toLowerCase();
@@ -21,6 +22,7 @@ const NewUserForm = ({ isShowing, hide, addNewUser }) => {
   const [inputCity, setInputCity] = useState('');
   const [isEmptyName, setIsEmptyName] = useState(true);
   const [isEmptyCity, setIsEmptyCity] = useState(true);
+  const theme = useContext(ThemeContext);
 
   const handleInputNameChange = (event) => {
     setInputName(event.target.value);
@@ -50,7 +52,7 @@ const NewUserForm = ({ isShowing, hide, addNewUser }) => {
   <React.Fragment>
     <div className="modal-overlay"/>
     <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
-      <div className="modal">
+      <div className="modal" style={{background: theme.modalBg}}>
         <div className="modal-header">
           <button type="button" className="modal-close-button" data-dismiss="modal" aria-label="Close" onClick={hide}>
             <span aria-hidden="true">&times;</span>
@@ -58,18 +60,18 @@ const NewUserForm = ({ isShowing, hide, addNewUser }) => {
         </div>
         <div className="container">
           <div>
-            <span>User name</span>
-            <input type="text" onChange={handleInputNameChange} value={inputName} />
+            <span style={{color: theme.spanColor}}>User name</span>
+            <input type="text" onChange={handleInputNameChange} value={inputName} style={{background: theme.inputBg}}/>
             {emptyNameMessage}
           </div>
           <div>
-            <span>Email</span>
-            <input type="text" onChange={handleInputEmailChange} value={inputEmail}/>
+            <span style={{color: theme.spanColor}}>Email</span>
+            <input type="text" onChange={handleInputEmailChange} value={inputEmail} style={{background: theme.inputBg}}/>
             {errorMessage}
           </div>
           <div>
-            <span>City</span>
-            <input type="text" onChange={handleInputCityChange} value={inputCity}/>
+            <span style={{color: theme.spanColor}}>City</span>
+            <input type="text" onChange={handleInputCityChange} value={inputCity} style={{background: theme.inputBg}}/>
             {emptyCityMessage}
           </div>
         </div>
@@ -94,7 +96,7 @@ const NewUserForm = ({ isShowing, hide, addNewUser }) => {
               setInputEmail('');
               setInputCity('');
             }
-        }}>Save</button>
+        }} style={{ background: theme.buttonBg, color: theme.buttonColor}}>Save</button>
       </div>
     </div>
   </React.Fragment>, document.body
