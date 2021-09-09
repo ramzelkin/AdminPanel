@@ -12,13 +12,23 @@ import ContainerBG from './ContainerBG';
 function App() {
   const {users, handleChange, deleteRow, editRow, isShowing, toggle, callback, editingUserIndex} = useUsers();
   const theme = useContext(ThemeContext);
+  const [getTheme, setTheme] = useState(themes.original);
+
+  const toggleTheme = () => {
+    
+    if (getTheme === themes.solarized) {
+      setTheme(themes.original);
+    } else {
+      setTheme(themes.solarized);
+    }
+  }
 
   return (
-    <ThemeContext.Provider value={themes.solarized}>
+    <ThemeContext.Provider value={getTheme}>
       <ContainerBG />
       <div className="App" >
         <div className="App-container" >
-        <ThemeTogglerButton/>
+        <ThemeTogglerButton changeTheme={toggleTheme}/>
           <div className="wrapper">
             <AddUserButton handleChange={handleChange} />
             <UsersTable users={users} deleteRow={deleteRow} editRow={editRow}/>

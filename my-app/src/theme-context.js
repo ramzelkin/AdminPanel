@@ -5,7 +5,7 @@ export const themes = {
       background: '#282c34',
       buttonBg: '#174ea6',
       fontColor: '#fff',
-      buttonColor: '#000',
+      buttonColor: '#fff',
       tableButtonsBg: '#fff',
       tableButtonsColor: '#000',
       cellColor: '#fff',
