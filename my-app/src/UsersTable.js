@@ -3,34 +3,38 @@ import './UsersTable.css';
 import './NewUserForm.css';
 import { ThemeContext } from './theme-context';
 
-const setDeletedUser = (e) => {
-  let target = e.target;
-  let row = target.closest("tr");
-  let index = row.getAttribute("data-index");
-  return index;
-}
-
-const UsersTable = (props) => {
+const UsersTable = ({ users, deleteUser, setEditId, setEditModalShow}) => {
   const theme = useContext(ThemeContext);
 
-  const rows = props.users.map((item, i) =>
-    <tr key={i} data-index={i} style={{color: theme.cellColor}}>
-      <td>{item.name}</td>
-      <td>{item.email}</td>
-      <td>{item.city}</td>
-      <td>
-        <button className="editUser" onClick={ (e) => {
-          let editedUser = setDeletedUser(e);
-          props.editRow(editedUser);
-        }} style={{ background: theme.tableButtonsBg, color: theme.tableButtonsColor}}>Edit</button>
-
-        <button className="deleteUser" onClick={ (e) => {
-            let deletedUserRow = setDeletedUser(e);
-            props.deleteRow(deletedUserRow);
-          }} style={{ background: theme.tableButtonsBg, color: theme.tableButtonsColor}}>Delete</button>
-      </td>
-    </tr>
-  );
+  const rows = users.map((item, i) => {
+    const editUserHandler = async () => {
+      await setEditId(i);
+      await setEditModalShow(true);
+    };
+    return (
+      <tr key={i} style={{color: theme.cellColor}}>
+        <td>{item.name}</td>
+        <td>{item.email}</td>
+        <td>{item.city}</td>
+        <td>
+          <button
+            className="editUser"
+            onClick={editUserHandler}
+            style={{background: theme.tableButtonsBg, color: theme.tableButtonsColor}}
+          >
+            Edit
+          </button>
+          <button
+            className="deleteUser"
+            onClick={() => deleteUser(i)}
+            style={{background: theme.tableButtonsBg, color: theme.tableButtonsColor}}
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    );
+  });
 
   return (
     <div className="UsersTable-container">

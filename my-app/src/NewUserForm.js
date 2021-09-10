@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import ReactDOM from 'react-dom';
 import './NewUserForm.css';
 import { ThemeContext } from './theme-context';
 
@@ -11,17 +10,18 @@ const isValidEmail = (value) => {
 }
 
 const isEmpty = (value) => {
-  value = value.toLowerCase();
-  return value !== '';
+  value = value.toLowerCase().trim();
+  return value === '';
 }
 
-const NewUserForm = ({ isShowing, hide, addNewUser }) => {
+const NewUserForm = ({ hide, addUser }) => {
   const [isValid, setIsValid] = useState(true);
+  const [isEmptyName, setIsEmptyName] = useState(false);
+  const [isEmptyCity, setIsEmptyCity] = useState(false);
+
   const [inputName, setInputName] = useState('');
   const [inputEmail, setInputEmail] = useState('');
   const [inputCity, setInputCity] = useState('');
-  const [isEmptyName, setIsEmptyName] = useState(true);
-  const [isEmptyCity, setIsEmptyCity] = useState(true);
   const theme = useContext(ThemeContext);
 
   const handleInputNameChange = (event) => {
@@ -36,22 +36,37 @@ const NewUserForm = ({ isShowing, hide, addNewUser }) => {
     setInputCity(event.target.value);
   }
 
-  const errorMessage = isValid
-    ? <div/>
-    : <div><span className="error-text">Wrong email</span></div>
+  const saveHandler = () => {
+    const userIsValid = isValidEmail(inputEmail)
+    setIsValid(userIsValid);
 
-  const emptyNameMessage = isEmptyName
-    ? <div/>
-    : <div><span className="error-text">Empty field</span></div> 
+    const nameIsEmpty = isEmpty(inputName);
+    setIsEmptyName(nameIsEmpty);
+
+    const cityIsEmpty = isEmpty(inputCity);
+    setIsEmptyCity(cityIsEmpty);
+
+    if (userIsValid && !nameIsEmpty && !cityIsEmpty) {
+      const user = {
+        name: inputName,
+        email: inputEmail,
+        city: inputCity,
+      };
+      addUser(user);
+      hide();
+    }
+  }
+
+  const errorMessage = !isValid && <div><span className="error-text">Wrong email</span></div>
+
+  const emptyNameMessage = isEmptyName && <div><span className="error-text">Empty field</span></div>
     
-  const emptyCityMessage = isEmptyCity
-    ? <div/>
-    : <div><span className="error-text">Empty field</span></div>
+  const emptyCityMessage = isEmptyCity && <div><span className="error-text">Empty field</span></div>
 
-  return isShowing ? ReactDOM.createPortal(
-  <React.Fragment>
+  return (
+  <>
     <div className="modal-overlay"/>
-    <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
+    <div className="modal-wrapper" role="dialog">
       <div className="modal" style={{background: theme.modalBg}}>
         <div className="modal-header">
           <button type="button" className="modal-close-button" data-dismiss="modal" aria-label="Close" onClick={hide}>
@@ -75,32 +90,17 @@ const NewUserForm = ({ isShowing, hide, addNewUser }) => {
             {emptyCityMessage}
           </div>
         </div>
-        <button className="save-btn" onClick={ () => {
-            let user = {};
-            let userIsValid = isValidEmail(inputEmail)
-            setIsValid(userIsValid);
-
-            let nameIsEmpty = isEmpty(inputName);
-            setIsEmptyName(nameIsEmpty);
-
-            let cityIsEmpty = isEmpty(inputCity);
-            setIsEmptyCity(cityIsEmpty);
-            
-            if (userIsValid && nameIsEmpty && cityIsEmpty) {
-              user["name"] = inputName;
-              user["email"] = inputEmail;
-              user["city"] = inputCity;
-              addNewUser(user);
-              hide();
-              setInputName('');
-              setInputEmail('');
-              setInputCity('');
-            }
-        }} style={{ background: theme.buttonBg, color: theme.buttonColor}}>Save</button>
+        <button
+          className="save-btn"
+          onClick={saveHandler}
+          style={{ background: theme.buttonBg, color: theme.buttonColor}}
+        >
+          Save
+        </button>
       </div>
     </div>
-  </React.Fragment>, document.body
-) : null;
+  </>
+  );
 }
 
 export default NewUserForm;

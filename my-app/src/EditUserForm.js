@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState, useContext } from 'react';
 import './EditUserForm.css';
 import { ThemeContext } from './theme-context';
 
@@ -11,32 +10,20 @@ const isValidEmail = (value) => {
 }
 
 const isEmpty = (value) => {
-  value = value.toLowerCase();
-  return value !== '';
+  value = value.toLowerCase().trim();
+  return value === '';
 }
 
-const EditUserForm = ({ isShowing, hide, addEditedUser, user }) => {
+const EditUserForm = ({ hide, editUser, user }) => {
+  const [inputName, setInputName] = useState(user.name);
+  const [inputEmail, setInputEmail] = useState(user.email);
+  const [inputCity, setInputCity] = useState(user.city);
+
   const [isValid, setIsValid] = useState(true);
-  const [inputName, setInputName] = useState('');
-  const [inputEmail, setInputEmail] = useState('');
-  const [inputCity, setInputCity] = useState('');
-  const [isEmptyName, setIsEmptyName] = useState(true);
-  const [isEmptyCity, setIsEmptyCity] = useState(true);
-  const [callback, setCallback] = useState((user) => { });
+  const [isEmptyName, setIsEmptyName] = useState(false);
+  const [isEmptyCity, setIsEmptyCity] = useState(false);
+
   const theme = useContext(ThemeContext);
-
-  useEffect(() => {
-    if (user.name == undefined) return;
-
-    setInputName(user.name);
-    setInputEmail(user.email);
-    setInputCity(user.city);
-  }, [user]);
-
-  useEffect(() => {
-    setCallback(addEditedUser);
-  }, [addEditedUser]);
-  
   const handleInputNameChange = (event) => {
     setInputName(event.target.value);
   }
@@ -49,22 +36,34 @@ const EditUserForm = ({ isShowing, hide, addEditedUser, user }) => {
     setInputCity(event.target.value);
   }
 
-  const errorMessage = isValid
-    ? <div/>
-    : <div><span className="error-text">Wrong email</span></div>
-  
-  const emptyNameMessage = isEmptyName
-  ? <div/>
-  : <div><span className="error-text">Empty field</span></div> 
-  
-const emptyCityMessage = isEmptyCity
-  ? <div/>
-  : <div><span className="error-text">Empty field</span></div>
+  const saveButtonHandler = () => {
+    const userIsValid = isValidEmail(inputEmail)
+    setIsValid(userIsValid);
+    const nameIsEmpty = isEmpty(inputName);
+    setIsEmptyName(nameIsEmpty);
+    const cityIsEmpty = isEmpty(inputCity);
+    setIsEmptyCity(cityIsEmpty);
 
-  return isShowing ? ReactDOM.createPortal(
-    <React.Fragment>
+    if (userIsValid && !nameIsEmpty && !cityIsEmpty) {
+      const user = {
+        name: inputName,
+        email: inputEmail,
+        city: inputCity,
+      };
+      console.log('userEdited', user)
+      editUser(user);
+      hide();
+    }
+  };
+
+  const errorMessage = !isValid && <div><span className="error-text">Wrong email</span></div>;
+  const emptyNameMessage = isEmptyName && <div><span className="error-text">Empty field</span></div>
+  const emptyCityMessage = isEmptyCity && <div><span className="error-text">Empty field</span></div>
+
+  return (
+    <>
       <div className="modal-overlay"/>
-      <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
+      <div className="modal-wrapper" role="dialog">
         <div className="modal" style={{background: theme.modalBg}}>
           <div className="modal-header">
             <button type="button" className="modal-close-button" data-dismiss="modal" aria-label="Close" onClick={hide}>
@@ -74,46 +73,25 @@ const emptyCityMessage = isEmptyCity
           <div className="container">
             <div>
               <span style={{color: theme.spanColor}}>User name</span>
-              <input type="text" onChange={handleInputNameChange}  value={inputName} style={{background: theme.inputBg}}/>
+              <input type="text" onChange={handleInputNameChange} value={inputName} style={{background: theme.inputBg}}/>
               {emptyNameMessage}
             </div>
             <div>
               <span style={{color: theme.spanColor}}>Email</span>
-              <input type="text" onChange={handleInputEmailChange}  value={inputEmail} style={{background: theme.inputBg}}/>
+              <input type="text" onChange={handleInputEmailChange} value={inputEmail} style={{background: theme.inputBg}}/>
             </div>
             {errorMessage}
             <div>
               <span style={{color: theme.spanColor}}>City</span>
-              <input type="text" onChange={handleInputCityChange}  value={inputCity} style={{background: theme.inputBg}}/>
+              <input type="text" onChange={handleInputCityChange} value={inputCity} style={{background: theme.inputBg}}/>
               {emptyCityMessage}
             </div>
           </div>
-          <button className="save-btn" onClick={ () => {
-           let user = {};
-            let userIsValid = isValidEmail(inputEmail)
-            setIsValid(userIsValid);
-
-            let nameIsEmpty = isEmpty(inputName);
-            setIsEmptyName(nameIsEmpty);
-
-            let cityIsEmpty = isEmpty(inputCity);
-            setIsEmptyCity(cityIsEmpty);
-            
-            if (userIsValid && nameIsEmpty && cityIsEmpty) {
-              user["name"] = inputName;
-              user["email"] = inputEmail;
-              user["city"] = inputCity;
-              callback(user);
-              hide();
-              setInputName('');
-              setInputEmail('');
-              setInputCity('');
-            }
-          }} style={{ background: theme.buttonBg, color: theme.buttonColor}}>Save</button>
+          <button className="save-btn" onClick={saveButtonHandler} style={{ background: theme.buttonBg, color: theme.buttonColor}}>Save</button>
         </div>
       </div>
-    </React.Fragment>, document.body
-  ) : null;
+    </>
+  )
 }
 
 export default EditUserForm;
