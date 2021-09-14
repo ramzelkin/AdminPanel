@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import './App.css';
 import UsersTable from './UsersTable.js';
 import AddUserButton from './AddUserButton.js';
@@ -7,10 +7,14 @@ import useUsers from './useUsers';
 import {ThemeContext, themes} from './theme-context';
 import ThemeTogglerButton from './ThemeTogglerButton';
 import ContainerBG from './ContainerBG';
+import NewUserForm from './NewUserForm';
 
 
 function App() {
-  const {users, handleChange, deleteRow, editRow, isShowing, toggle, callback, editingUserIndex} = useUsers();
+  const [ showAddUserModal, setAddModalShow ] = useState(false);
+  const [ showEditUserModal, setEditModalShow ] = useState(false);
+  const [ editUserId, setEditId] = useState(false);
+  const { users, deleteUser, addUser, editUser } = useUsers();
   const theme = useContext(ThemeContext);
   const [getTheme, setTheme] = useState(themes.original);
 
@@ -30,17 +34,29 @@ function App() {
         <div className="App-container" >
         <ThemeTogglerButton changeTheme={toggleTheme}/>
           <div className="wrapper">
-            <AddUserButton handleChange={handleChange} />
-            <UsersTable users={users} deleteRow={deleteRow} editRow={editRow}/>
-            <EditUserForm 
-              isShowing={isShowing}
-              hide={toggle}
-              addEditedUser={callback}
-              user={editingUserIndex == null ? {} : users[editingUserIndex]}
+            <AddUserButton showAddUserForm={setAddModalShow} />
+            <UsersTable
+              users={users}
+              setEditModalShow={setEditModalShow}
+              setEditId={setEditId}
+              deleteUser={deleteUser}
             />
           </div>
-          </div>
-          </div>
+        </div>
+        {showEditUserModal &&
+          <EditUserForm
+            hide={() => setEditModalShow(false)}
+            user={users[editUserId]}
+            editUser={(user) => editUser(editUserId, user)}
+          />
+        }
+        {showAddUserModal &&
+          <NewUserForm
+            hide={() => setAddModalShow(false)}
+            addUser={addUser}
+          />
+        }
+      </div>
     </ThemeContext.Provider>
   );
 }
