@@ -8,6 +8,7 @@ import {ThemeContext, themes} from './theme-context';
 import ThemeTogglerButton from './ThemeTogglerButton';
 import ContainerBG from './ContainerBG';
 import NewUserForm from './NewUserForm';
+import ErrorComponent from './ErrorComponent';
 
 
 function App() {
@@ -75,10 +76,6 @@ function App() {
     </div>
   );
   
-}
-
-function ErrorComponent() {
-  return <h1>You get error!!!</h1>
 }
 
 export default App;
