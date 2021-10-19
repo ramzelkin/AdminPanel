@@ -24,3 +24,9 @@
   align-self: center;
   width: auto;
 }
+
+.button.call-error {
+  align-self: flex-end;
+  margin-top: 15px;
+  margin-right: 40px;
+}

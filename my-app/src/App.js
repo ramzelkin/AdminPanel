@@ -8,8 +8,6 @@ import {ThemeContext, themes} from './theme-context';
 import ThemeTogglerButton from './ThemeTogglerButton';
 import ContainerBG from './ContainerBG';
 import NewUserForm from './NewUserForm';
-import CallErrorButton from './CallErrorButton';
-import ErrorBoundry from './ErrorBoundry';
 
 
 function App() {
@@ -19,6 +17,7 @@ function App() {
   const { users, deleteUser, addUser, editUser } = useUsers();
   const theme = useContext(ThemeContext);
   const [getTheme, setTheme] = useState(themes.original);
+  const [hasError, setHasError] = useState(false);
 
   const toggleTheme = () => {
     
@@ -28,14 +27,24 @@ function App() {
       setTheme(themes.solarized);
     }
   }
-  try {
+
+  function getError() {
+    try {
+      throw Error("I crashed!");
+    } catch (error) {
+      setHasError(true)
+    }
+  }
+  
     return (
+      <div>
+      {!hasError && (
       <ThemeContext.Provider value={getTheme}>
         <ContainerBG />
         <div className="App" >
           <div className="App-container" >
           <ThemeTogglerButton changeTheme={toggleTheme}/>
-          <CallErrorButton />
+          <button className="button call-error" onClick={getError}>Call error</button>
             <div className="wrapper">
               <AddUserButton showAddUserForm={setAddModalShow} />
               <UsersTable
@@ -61,11 +70,15 @@ function App() {
           }
         </div>
       </ThemeContext.Provider>
+      )}
+      {hasError && <ErrorComponent />}
+    </div>
   );
-  } catch (error) {
-    return (<div>I crashed!!!! </div>);
-  }
   
+}
+
+function ErrorComponent() {
+  return <h1>You get error!!!</h1>
 }
 
 export default App;
