@@ -9,6 +9,8 @@ import ThemeTogglerButton from './ThemeTogglerButton';
 import ContainerBG from './ContainerBG';
 import NewUserForm from './NewUserForm';
 import ErrorComponent from './ErrorComponent';
+import Portal from './Portal';
+
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
   const theme = useContext(ThemeContext);
   const [getTheme, setTheme] = useState(themes.original);
   const [hasError, setHasError] = useState(false);
+  const [showAdditionalModal, setAdditionalModal] = useState(false);
 
   const toggleTheme = () => {
     
@@ -44,9 +47,14 @@ function App() {
         <ContainerBG />
         <div className="App" >
           <div className="App-container" >
+          <div />
           <ThemeTogglerButton changeTheme={toggleTheme}/>
           <button className="button call-error" onClick={getError}>Call error</button>
-            <div className="wrapper">
+          <button className="button" onClick={() => setAdditionalModal(!showAdditionalModal)}>Call window</button>
+          <Portal id={showAdditionalModal ? "portalParent" : null}>
+              <p>Thinking with portals</p>
+          </Portal>
+            <div className="wrapper" id="portalParent">
               <AddUserButton showAddUserForm={setAddModalShow} />
               <UsersTable
                 users={users}
