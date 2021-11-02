@@ -50,7 +50,7 @@ function App() {
           <div />
           <ThemeTogglerButton changeTheme={toggleTheme}/>
           <button className="button call-error" onClick={getError}>Call error</button>
-          <button className="button" onClick={() => setAdditionalModal(!showAdditionalModal)}>Call window</button>
+          <button className="button" id="callWindow" onClick={() => setAdditionalModal(!showAdditionalModal)}>Call window</button>
           <Portal id={showAdditionalModal ? "portalParent" : null}>
               <p>Thinking with portals</p>
           </Portal>
